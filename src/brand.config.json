@@ -1,0 +1,24 @@
+{
+  "siteName": "My Site",
+  "tagline": "Your tagline here",
+  "description": "Describe your site here.",
+  "primaryColor": "#2563EB",
+  "secondaryColor": "#7C3AED",
+  "accentColor": "#10B981",
+  "backgroundColor": "#0F172A",
+  "surfaceColor": "#1E293B",
+  "textColor": "#E2E8F0",
+  "mutedColor": "#94A3B8",
+  "fontHeading": "Inter",
+  "fontBody": "Inter",
+  "logoText": "My Site",
+  "twitterUrl": "",
+  "instagramUrl": "",
+  "youtubeUrl": "",
+  "navLinks": [
+    {"label": "Home", "href": "/"},
+    {"label": "Blog", "href": "/blog"},
+    {"label": "About", "href": "/about"},
+    {"label": "Subscribe", "href": "/subscribe"}
+  ]
+}

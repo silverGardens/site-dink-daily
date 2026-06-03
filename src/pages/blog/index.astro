@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import BlogCard from '../../components/BlogCard.astro'
+import NewsletterForm from '../../components/NewsletterForm.astro'
+
+const allPosts = await getCollection('blog')
+const posts = allPosts
+  .filter(p => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+---
+
+<BaseLayout title="Blog" description="Practical guides, honest reviews, and workflow tutorials for AI tools.">
+  <section class="blog-hero">
+    <div class="blog-hero-inner">
+      <h1 class="blog-title">The Blog</h1>
+      <p class="blog-subtitle">Practical guides, honest reviews, and workflow tutorials.</p>
+    </div>
+  </section>
+
+  <section class="blog-listing">
+    <div class="listing-container">
+      <div class="posts-grid">
+        {posts.map(post => (
+          <BlogCard post={post} slug={post.id} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-newsletter">
+    <div class="blog-nl-inner">
+      <h2>Get the weekly roundup</h2>
+      <p>New AI tool reviews and tutorials, every Tuesday.</p>
+      <NewsletterForm variant="inline" />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-hero {
+    padding: 4rem 1.5rem;
+    border-bottom: 1px solid rgba(148,163,184,0.08);
+    background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(37,99,235,0.1) 0%, transparent 70%);
+  }
+  .blog-hero-inner { max-width: 700px; margin: 0 auto; }
+  .blog-title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.75rem; }
+  .blog-subtitle { color: var(--color-muted); font-size: 1.125rem; margin: 0; }
+  .blog-listing { padding: 3rem 1.5rem; }
+  .listing-container { max-width: 1200px; margin: 0 auto; }
+  .posts-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+  @media (min-width: 640px) { .posts-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (min-width: 1024px) { .posts-grid { grid-template-columns: repeat(3,1fr); } }
+  .blog-newsletter { background: var(--color-surface); padding: 3.5rem 1.5rem; border-top: 1px solid rgba(148,163,184,0.08); }
+  .blog-nl-inner { max-width: 600px; margin: 0 auto; text-align: center; }
+  .blog-nl-inner h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .blog-nl-inner p { color: var(--color-muted); margin-bottom: 1.5rem; }
+</style>

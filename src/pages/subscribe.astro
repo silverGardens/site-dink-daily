@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import NewsletterForm from '../components/NewsletterForm.astro'
+---
+
+<BaseLayout title="Subscribe" description="Get practical AI tool reviews and tutorials every Tuesday — free.">
+  <section class="subscribe-page">
+    <div class="subscribe-inner">
+      <h1 class="sub-title">Get Smarter About AI Every Week</h1>
+      <p class="sub-lead">
+        Join professionals getting practical AI tool reviews, tutorials, and workflow tips — every Tuesday.
+      </p>
+      <ul class="benefits">
+        <li><span class="check">✓</span> Honest tool reviews — no paid placements or hype</li>
+        <li><span class="check">✓</span> Step-by-step tutorials you can actually follow</li>
+        <li><span class="check">✓</span> No fluff, no sensational takes</li>
+        <li><span class="check">✓</span> Free, forever</li>
+      </ul>
+      <NewsletterForm variant="standalone" />
+      <p class="fine-print">Unsubscribe any time. We respect your inbox.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .subscribe-page {
+    padding: 5rem 1.5rem;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .subscribe-inner {
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+  }
+  .sub-title {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+  .sub-lead {
+    color: var(--color-muted);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+  }
+  .benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    text-align: left;
+  }
+  .benefits li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    padding: 0.4rem 0;
+    font-size: 0.9375rem;
+    color: var(--color-text);
+  }
+  .check {
+    color: var(--color-accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+  }
+  .fine-print {
+    color: var(--color-muted);
+    font-size: 0.8125rem;
+    margin-top: 1.25rem;
+    opacity: 0.7;
+  }
+</style>

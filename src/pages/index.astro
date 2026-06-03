@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '../layouts/BaseLayout.astro'
+import HeroSection from '../components/HeroSection.astro'
+import BlogCard from '../components/BlogCard.astro'
+import NewsletterForm from '../components/NewsletterForm.astro'
+import brand from '../brand.config.json'
+
+const allPosts = await getCollection('blog')
+const recentPosts = allPosts
+  .filter(p => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3)
+---
+
+<BaseLayout title="Home" description={brand.description}>
+  <HeroSection
+    headline="Practical AI for Real Workflows"
+    subheadline={brand.description}
+    ctaText="Explore the Blog"
+    ctaHref="/blog"
+  />
+
+  <section class="covers-section">
+    <div class="section-container">
+      <h2 class="section-heading">What We Cover</h2>
+      <div class="covers-grid">
+        <div class="cover-card">
+          <div class="cover-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>AI Tool Reviews</h3>
+          <p>We put new tools through their paces with real-world tasks, not marketing demos. You get the honest verdict before you spend time or money.</p>
+        </div>
+        <div class="cover-card">
+          <div class="cover-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"/><line x1="3" y1="22" x2="21" y2="22"/></svg>
+          </div>
+          <h3>Workflow Tutorials</h3>
+          <p>Step-by-step guides for connecting AI tools to your actual stack. Built for professionals who want results, not theory — no coding required for most of it.</p>
+        </div>
+        <div class="cover-card">
+          <div class="cover-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+          </div>
+          <h3>Productivity Deep-Dives</h3>
+          <p>In-depth analysis of how top performers are using AI to do more meaningful work. Beyond the surface level — we dig into what actually sticks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="posts-section">
+    <div class="section-container">
+      <h2 class="section-heading">Latest Posts</h2>
+      <div class="posts-grid">
+        {recentPosts.map(post => (
+          <BlogCard post={post} slug={post.id} />
+        ))}
+      </div>
+      <div class="view-all-row">
+        <a href="/blog" class="view-all-link">View all posts →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter-section">
+    <div class="newsletter-inner">
+      <h2 class="nl-heading">Never Miss a New AI Tool</h2>
+      <p class="nl-sub">Join professionals getting our weekly roundup of what's actually worth using.</p>
+      <NewsletterForm variant="inline" />
+    </div>
+  </section>
+
+  <section class="proof-section">
+    <p class="proof-text">No fluff &nbsp;&middot;&nbsp; One email per week &nbsp;&middot;&nbsp; Unsubscribe any time</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .section-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .section-heading { font-size: 1.75rem; font-weight: 800; margin-bottom: 2rem; letter-spacing: -0.02em; }
+  .covers-section { padding: 4rem 0; border-top: 1px solid rgba(148,163,184,0.08); }
+  .covers-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+  @media (min-width: 768px) { .covers-grid { grid-template-columns: repeat(3,1fr); } }
+  .cover-card { background: var(--color-surface); border: 1px solid rgba(148,163,184,0.12); border-radius: 10px; padding: 1.75rem; }
+  .cover-icon { width: 52px; height: 52px; background: rgba(37,99,235,0.12); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--color-primary); margin-bottom: 1rem; }
+  .cover-card h3 { font-size: 1.0625rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .cover-card p { color: var(--color-muted); font-size: 0.9rem; line-height: 1.65; margin: 0; }
+  .posts-section { padding: 4rem 0; }
+  .posts-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+  @media (min-width: 640px) { .posts-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (min-width: 1024px) { .posts-grid { grid-template-columns: repeat(3,1fr); } }
+  .view-all-row { text-align: center; margin-top: 2.5rem; }
+  .view-all-link { color: var(--color-primary); text-decoration: none; font-weight: 600; font-size: 1rem; }
+  .view-all-link:hover { opacity: 0.8; }
+  .newsletter-section { background: var(--color-surface); padding: 4rem 1.5rem; border-top: 1px solid rgba(148,163,184,0.08); }
+  .newsletter-inner { text-align: center; max-width: 600px; margin: 0 auto; }
+  .nl-heading { font-size: 2rem; font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
+  .nl-sub { color: var(--color-muted); font-size: 1.05rem; margin-bottom: 1.75rem; }
+  .proof-section { padding: 1.5rem 1.5rem 2.5rem; }
+  .proof-text { text-align: center; color: var(--color-muted); font-size: 0.875rem; opacity: 0.7; margin: 0; }
+</style>

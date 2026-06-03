@@ -1,0 +1,108 @@
+---
+import brand from '../brand.config.json'
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">{brand.logoText}</a>
+    <nav class="desktop-nav">
+      {brand.navLinks.map(link => (
+        <a href={link.href} class="nav-link">{link.label}</a>
+      ))}
+    </nav>
+    <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu">
+      <span class="ham-icon">☰</span>
+    </button>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav">
+    {brand.navLinks.map(link => (
+      <a href={link.href} class="mobile-nav-link">{link.label}</a>
+    ))}
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .logo:hover { opacity: 0.85; }
+  .desktop-nav {
+    display: none;
+    gap: 2rem;
+    align-items: center;
+  }
+  @media (min-width: 768px) {
+    .desktop-nav { display: flex; }
+    .hamburger { display: none; }
+  }
+  .nav-link {
+    color: var(--color-muted);
+    text-decoration: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+  .nav-link:hover { color: var(--color-text); }
+  .hamburger {
+    background: none;
+    border: 1px solid rgba(148,163,184,0.3);
+    color: var(--color-text);
+    cursor: pointer;
+    padding: 0.375rem 0.625rem;
+    border-radius: 6px;
+    font-size: 1.125rem;
+    line-height: 1;
+  }
+  .mobile-nav {
+    display: none;
+    flex-direction: column;
+    background: var(--color-surface);
+    border-top: 1px solid rgba(148,163,184,0.1);
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav-link {
+    padding: 0.875rem 1.5rem;
+    color: var(--color-muted);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(148,163,184,0.08);
+    transition: color 0.15s, background 0.15s;
+  }
+  .mobile-nav-link:hover {
+    color: var(--color-text);
+    background: rgba(255,255,255,0.03);
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('hamburger-btn')
+  const nav = document.getElementById('mobile-nav')
+  const icon = btn?.querySelector('.ham-icon')
+  btn?.addEventListener('click', () => {
+    const isOpen = nav?.classList.toggle('open')
+    if (icon) icon.textContent = isOpen ? '×' : '☰'
+  })
+</script>

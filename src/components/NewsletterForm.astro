@@ -1,0 +1,197 @@
+---
+interface Props {
+  variant: 'hero' | 'inline' | 'standalone'
+}
+const { variant } = Astro.props
+const formId = `newsletter-form-${Math.random().toString(36).slice(2,7)}`
+const webhookUrl = import.meta.env.PUBLIC_NEWSLETTER_WEBHOOK ?? ''
+const siteSlug = import.meta.env.PUBLIC_SITE_SLUG ?? 'ai-tools'
+---
+
+{variant === 'standalone' && (
+  <div class="newsletter-standalone">
+    <ul class="benefit-list">
+      <li>✓ Honest tool reviews — no paid placements</li>
+      <li>✓ Step-by-step tutorials that actually work</li>
+      <li>✓ No fluff, no hype</li>
+      <li>✓ Free, forever</li>
+    </ul>
+    <form class="nl-form nl-form--standalone" data-form id={formId}>
+      <div class="field-group">
+        <input type="text" name="firstName" placeholder="First name (optional)" class="nl-input" autocomplete="given-name" />
+        <input type="email" name="email" placeholder="Your email address" required class="nl-input" autocomplete="email" />
+      </div>
+      <button type="submit" class="nl-btn nl-btn--full">Subscribe — It's Free</button>
+    </form>
+    <div class="nl-success" data-success style="display:none">
+      <p>🎉 You're in! Welcome to AI Tools Daily. Check your inbox for a confirmation.</p>
+    </div>
+    <div class="nl-error" data-error style="display:none">
+      <p>Something went wrong. Please try again.</p>
+    </div>
+  </div>
+)}
+
+{variant === 'inline' && (
+  <div class="newsletter-inline">
+    <form class="nl-form nl-form--inline" data-form id={formId}>
+      <input type="email" name="email" placeholder="Your email address" required class="nl-input nl-input--inline" autocomplete="email" />
+      <button type="submit" class="nl-btn nl-btn--inline">Subscribe</button>
+    </form>
+    <div class="nl-success nl-success--inline" data-success style="display:none">
+      <p>You're in! Check your inbox.</p>
+    </div>
+    <div class="nl-error nl-error--inline" data-error style="display:none">
+      <p>Something went wrong. Please try again.</p>
+    </div>
+  </div>
+)}
+
+{variant === 'hero' && (
+  <div class="newsletter-hero">
+    <form class="nl-form nl-form--hero" data-form id={formId}>
+      <div class="hero-form-row">
+        <input type="email" name="email" placeholder="Enter your email" required class="nl-input nl-input--hero" autocomplete="email" />
+        <button type="submit" class="nl-btn nl-btn--hero">Get the Newsletter</button>
+      </div>
+    </form>
+    <div class="nl-success" data-success style="display:none">
+      <p>🎉 Welcome aboard! Check your inbox for a confirmation.</p>
+    </div>
+    <div class="nl-error" data-error style="display:none">
+      <p>Something went wrong. Please try again.</p>
+    </div>
+  </div>
+)}
+
+<style>
+  /* Shared */
+  .nl-input {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(148,163,184,0.25);
+    color: var(--color-text);
+    border-radius: 7px;
+    padding: 0.75rem 1rem;
+    font-size: 0.9375rem;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.15s;
+    font-family: var(--font-body);
+  }
+  .nl-input:focus { border-color: var(--color-primary); }
+  .nl-input::placeholder { color: var(--color-muted); opacity: 0.7; }
+  .nl-btn {
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.15s;
+    white-space: nowrap;
+    font-family: var(--font-body);
+  }
+  .nl-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .nl-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  /* Standalone */
+  .newsletter-standalone { max-width: 420px; margin: 0 auto; }
+  .benefit-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    text-align: left;
+  }
+  .benefit-list li {
+    color: var(--color-muted);
+    padding: 0.35rem 0;
+    font-size: 0.9375rem;
+  }
+  .nl-form--standalone .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .nl-btn--full { width: 100%; }
+
+  /* Inline */
+  .nl-form--inline {
+    display: flex;
+    gap: 0.625rem;
+    flex-wrap: wrap;
+  }
+  .nl-input--inline { flex: 1; min-width: 200px; }
+  .nl-btn--inline { flex-shrink: 0; }
+  .nl-success--inline p, .nl-error--inline p { margin: 0.5rem 0 0; font-size: 0.9rem; }
+
+  /* Hero */
+  .newsletter-hero { max-width: 600px; margin: 0 auto; }
+  .hero-form-row {
+    display: flex;
+    gap: 0.625rem;
+    flex-wrap: wrap;
+  }
+  .nl-input--hero { flex: 1; min-width: 220px; }
+  .nl-btn--hero { flex-shrink: 0; }
+
+  /* Success / Error */
+  .nl-success p {
+    color: var(--color-accent);
+    font-weight: 500;
+    margin: 0.75rem 0 0;
+  }
+  .nl-error p {
+    color: #f87171;
+    margin: 0.75rem 0 0;
+  }
+</style>
+
+<script define:vars={{ formId, webhookUrl, siteSlug }}>
+  const form = document.getElementById(formId)
+  if (form) {
+    const successEl = form.parentElement?.querySelector('[data-success]')
+    const errorEl = form.parentElement?.querySelector('[data-error]')
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const emailInput = form.querySelector('[name="email"]')
+      const firstNameInput = form.querySelector('[name="firstName"]')
+      const submitBtn = form.querySelector('[type="submit"]')
+      const email = emailInput?.value || ''
+      const firstName = firstNameInput?.value || ''
+      if (submitBtn) {
+        submitBtn.textContent = 'Subscribing...'
+        submitBtn.disabled = true
+      }
+      if (errorEl) errorEl.style.display = 'none'
+      if (!webhookUrl) {
+        alert('Newsletter signup coming soon!')
+        if (submitBtn) { submitBtn.textContent = 'Subscribe'; submitBtn.disabled = false }
+        return
+      }
+      try {
+        const resp = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email,
+            firstName,
+            siteSlug,
+            source: window.location.pathname
+          })
+        })
+        if (resp.ok) {
+          form.style.display = 'none'
+          if (successEl) successEl.style.display = 'block'
+        } else {
+          throw new Error('Non-ok response')
+        }
+      } catch {
+        if (errorEl) errorEl.style.display = 'block'
+        if (submitBtn) { submitBtn.textContent = 'Subscribe'; submitBtn.disabled = false }
+      }
+    })
+  }
+</script>

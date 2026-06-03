@@ -1,0 +1,51 @@
+---
+import { getCollection, render } from 'astro:content'
+import BlogLayout from '../../layouts/BlogLayout.astro'
+import BlogCard from '../../components/BlogCard.astro'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog')
+  return posts.map(post => ({
+    params: { slug: post.id },
+    props: { post, allPosts: posts }
+  }))
+}
+
+const { post, allPosts } = Astro.props
+const { Content } = await render(post)
+
+const otherPosts = allPosts
+  .filter((p: any) => p.id !== post.id && !p.data.draft)
+  .sort((a: any, b: any) => {
+    const aTagMatch = a.data.tags.some((t: string) => post.data.tags.includes(t)) ? 1 : 0
+    const bTagMatch = b.data.tags.some((t: string) => post.data.tags.includes(t)) ? 1 : 0
+    if (bTagMatch !== aTagMatch) return bTagMatch - aTagMatch
+    return b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  })
+  .slice(0, 2)
+---
+
+<BlogLayout frontmatter={post.data}>
+  <Content />
+</BlogLayout>
+
+{otherPosts.length > 0 && (
+  <section class="more-posts">
+    <div class="more-inner">
+      <h2 class="more-heading">More Posts</h2>
+      <div class="more-grid">
+        {otherPosts.map((p: any) => (
+          <BlogCard post={p} slug={p.id} />
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .more-posts { padding: 3rem 1.5rem 4rem; border-top: 1px solid rgba(148,163,184,0.08); }
+  .more-inner { max-width: 740px; margin: 0 auto; }
+  .more-heading { font-size: 1.375rem; font-weight: 700; margin-bottom: 1.5rem; }
+  .more-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+  @media (min-width: 640px) { .more-grid { grid-template-columns: repeat(2,1fr); } }
+</style>

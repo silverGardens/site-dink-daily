@@ -1,0 +1,103 @@
+---
+import brand from '../brand.config.json'
+const year = new Date().getFullYear()
+const socialLinks = [
+  { url: brand.twitterUrl, label: 'Twitter' },
+  { url: brand.instagramUrl, label: 'Instagram' },
+  { url: brand.youtubeUrl, label: 'YouTube' },
+].filter(s => s.url && s.url.length > 0)
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="footer-logo">{brand.logoText}</a>
+      <p class="footer-tagline">{brand.tagline}</p>
+    </div>
+    <hr class="footer-rule" />
+    <nav class="footer-nav">
+      {brand.navLinks.map(link => (
+        <a href={link.href} class="footer-nav-link">{link.label}</a>
+      ))}
+      <a href="/contact" class="footer-nav-link">Contact</a>
+      <a href="/privacy" class="footer-nav-link">Privacy Policy</a>
+    </nav>
+    {socialLinks.length > 0 && (
+      <div class="footer-social">
+        {socialLinks.map(s => (
+          <a href={s.url} class="footer-social-link" target="_blank" rel="noopener noreferrer">{s.label}</a>
+        ))}
+      </div>
+    )}
+    <p class="footer-copy">© {year} {brand.siteName}. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-surface);
+    border-top: 1px solid rgba(148,163,184,0.1);
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+  .footer-logo {
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+  .footer-tagline {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+  .footer-rule {
+    border: none;
+    border-top: 1px solid rgba(148,163,184,0.12);
+    margin: 1.75rem 0;
+  }
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+  .footer-nav-link {
+    color: var(--color-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.15s;
+  }
+  .footer-nav-link:hover { color: var(--color-text); }
+  .footer-social {
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+  .footer-social-link {
+    color: var(--color-muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    padding: 0.25rem 0.625rem;
+    border: 1px solid rgba(148,163,184,0.2);
+    border-radius: 4px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .footer-social-link:hover {
+    color: var(--color-text);
+    border-color: rgba(148,163,184,0.4);
+  }
+  .footer-copy {
+    color: var(--color-muted);
+    font-size: 0.8125rem;
+    margin: 0;
+    opacity: 0.7;
+  }
+</style>

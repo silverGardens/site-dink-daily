@@ -1,0 +1,191 @@
+---
+import BaseLayout from './BaseLayout.astro'
+import NewsletterForm from '../components/NewsletterForm.astro'
+
+interface Props {
+  frontmatter: {
+    title: string
+    description: string
+    pubDate: Date
+    author?: string
+    heroImage?: string
+    tags?: string[]
+  }
+}
+
+const { frontmatter } = Astro.props
+const { title, description, pubDate, author = 'Editorial Team', heroImage, tags = [] } = frontmatter
+
+const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric'
+})
+
+const wordCount = description.split(' ').length * 20
+const readTime = Math.max(1, Math.ceil(wordCount / 200))
+---
+
+<BaseLayout title={title} description={description} image={heroImage}>
+  <article class="blog-post-page">
+    <div class="post-container">
+      <nav class="breadcrumb">
+        <a href="/blog">Blog</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-current">{title}</span>
+      </nav>
+
+      {heroImage && (
+        <img src={heroImage} alt={title} class="hero-img" />
+      )}
+
+      <h1 class="post-title">{title}</h1>
+
+      <div class="post-meta">
+        <span class="post-author">{author}</span>
+        <span class="meta-dot">·</span>
+        <span class="post-date">{formattedDate}</span>
+        <span class="meta-dot">·</span>
+        <span class="post-read">~{readTime} min read</span>
+      </div>
+
+      {tags.length > 0 && (
+        <div class="post-tags">
+          {tags.map(tag => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      )}
+
+      <div class="prose prose-invert max-w-none post-content">
+        <slot />
+      </div>
+
+      <div class="post-newsletter">
+        <h3>Enjoyed this? Get more every week.</h3>
+        <p>Join professionals getting practical AI tool reviews and tutorials every Tuesday.</p>
+        <NewsletterForm variant="inline" />
+      </div>
+
+      <a href="/blog" class="back-link">← Back to Blog</a>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .blog-post-page {
+    padding: 2rem 0 4rem;
+  }
+  .post-container {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+  }
+  .breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb-sep { opacity: 0.5; }
+  .breadcrumb-current {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 30ch;
+  }
+  .hero-img {
+    width: 100%;
+    max-height: 18rem;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+  }
+  .post-title {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 800;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    align-items: center;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  .meta-dot { opacity: 0.5; }
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-bottom: 2rem;
+  }
+  .tag {
+    background: rgba(148,163,184,0.12);
+    color: var(--color-muted);
+    font-size: 0.75rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .post-content {
+    margin-bottom: 3rem;
+  }
+  .post-newsletter {
+    background: var(--color-surface);
+    border: 1px solid rgba(148,163,184,0.15);
+    border-radius: 10px;
+    padding: 1.75rem;
+    margin-bottom: 2.5rem;
+  }
+  .post-newsletter h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 0.375rem;
+  }
+  .post-newsletter p {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  .back-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: opacity 0.15s;
+  }
+  .back-link:hover { opacity: 0.8; }
+
+  /* Prose overrides for dark theme */
+  :global(.prose-invert) {
+    --tw-prose-body: var(--color-text);
+    --tw-prose-headings: var(--color-text);
+    --tw-prose-links: var(--color-primary);
+    --tw-prose-bold: var(--color-text);
+    --tw-prose-counters: var(--color-muted);
+    --tw-prose-bullets: var(--color-muted);
+    --tw-prose-hr: rgba(148,163,184,0.15);
+    --tw-prose-quotes: var(--color-muted);
+    --tw-prose-quote-borders: var(--color-primary);
+    --tw-prose-captions: var(--color-muted);
+    --tw-prose-code: var(--color-accent);
+    --tw-prose-pre-code: var(--color-text);
+    --tw-prose-pre-bg: var(--color-surface);
+    --tw-prose-th-borders: rgba(148,163,184,0.2);
+    --tw-prose-td-borders: rgba(148,163,184,0.1);
+  }
+</style>
