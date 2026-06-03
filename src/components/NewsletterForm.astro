@@ -5,7 +5,7 @@ interface Props {
 const { variant } = Astro.props
 const formId = `newsletter-form-${Math.random().toString(36).slice(2,7)}`
 const webhookUrl = import.meta.env.PUBLIC_NEWSLETTER_WEBHOOK ?? ''
-const siteSlug = import.meta.env.PUBLIC_SITE_SLUG ?? 'ai-tools'
+const siteSlug = import.meta.env.PUBLIC_SITE_SLUG ?? ''
 ---
 
 {variant === 'standalone' && (

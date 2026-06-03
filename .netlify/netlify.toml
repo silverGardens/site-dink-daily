@@ -7,7 +7,7 @@ redirects = []
 [functions."*"]
 
 [build]
-publish = "C:\\Users\\jaksi\\Projects\\Project Umbra\\subsites\\site-ai-tools\\dist"
+publish = "C:\\Users\\jaksi\\Projects\\Project Umbra\\subsites\\site-dink-daily\\dist"
 publishOrigin = "config"
 commandOrigin = "config"
 command = "npm run build"

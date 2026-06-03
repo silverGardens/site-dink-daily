@@ -15,7 +15,7 @@ const recentPosts = allPosts
 
 <BaseLayout title="Home" description={brand.description}>
   <HeroSection
-    headline="Practical AI for Real Workflows"
+    headline={brand.tagline}
     subheadline={brand.description}
     ctaText="Explore the Blog"
     ctaHref="/blog"
@@ -29,22 +29,22 @@ const recentPosts = allPosts
           <div class="cover-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
           </div>
-          <h3>AI Tool Reviews</h3>
-          <p>We put new tools through their paces with real-world tasks, not marketing demos. You get the honest verdict before you spend time or money.</p>
+          <h3>Skill Tips</h3>
+          <p>From the dink shot to the erne, we break down the techniques that will actually improve your game — with clear explanations and drills you can practice today.</p>
         </div>
         <div class="cover-card">
           <div class="cover-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"/><line x1="3" y1="22" x2="21" y2="22"/></svg>
           </div>
-          <h3>Workflow Tutorials</h3>
-          <p>Step-by-step guides for connecting AI tools to your actual stack. Built for professionals who want results, not theory — no coding required for most of it.</p>
+          <h3>Gear Reviews</h3>
+          <p>Honest paddle and equipment reviews from players who actually use the gear. We tell you what's worth buying and what to skip.</p>
         </div>
         <div class="cover-card">
           <div class="cover-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
           </div>
-          <h3>Productivity Deep-Dives</h3>
-          <p>In-depth analysis of how top performers are using AI to do more meaningful work. Beyond the surface level — we dig into what actually sticks.</p>
+          <h3>News &amp; Tournaments</h3>
+          <p>Stay current with the pickleball world — pro tours, tournament results, rule changes, and everything happening in the fastest-growing sport in America.</p>
         </div>
       </div>
     </div>
@@ -66,8 +66,8 @@ const recentPosts = allPosts
 
   <section class="newsletter-section">
     <div class="newsletter-inner">
-      <h2 class="nl-heading">Never Miss a New AI Tool</h2>
-      <p class="nl-sub">Join professionals getting our weekly roundup of what's actually worth using.</p>
+      <h2 class="nl-heading">Never Miss a Dink</h2>
+      <p class="nl-sub">Join pickleball players getting our daily dose of tips, news, and gear — delivered to your inbox.</p>
       <NewsletterForm variant="inline" />
     </div>
   </section>
