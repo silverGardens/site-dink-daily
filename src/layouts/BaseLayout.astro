@@ -11,7 +11,15 @@ interface Props {
 }
 const { title, description, image } = Astro.props
 
-// CSS custom properties injected on <html> so all var(--color-*) refs pick them up.
+function hexToRgba(hex: string, alpha: number): string {
+  const clean = (hex ?? '#000000').replace('#', '').padEnd(6, '0')
+  const r = parseInt(clean.slice(0,2), 16) || 0
+  const g = parseInt(clean.slice(2,4), 16) || 0
+  const b = parseInt(clean.slice(4,6), 16) || 0
+  return `rgba(${r},${g},${b},${alpha})`
+}
+
+// All CSS custom properties on <html> so every component can use var(--color-*).
 const cssVars = [
   `--color-primary:${brand.primaryColor}`,
   `--color-secondary:${brand.secondaryColor}`,
@@ -20,11 +28,14 @@ const cssVars = [
   `--color-surface:${brand.surfaceColor ?? '#1E293B'}`,
   `--color-text:${brand.textColor}`,
   `--color-muted:${brand.mutedColor ?? '#94A3B8'}`,
+  // Tinted variants used for gradients, icon bubbles, decorative backgrounds
+  `--color-primary-glow:${hexToRgba(brand.primaryColor, 0.15)}`,
+  `--color-secondary-glow:${hexToRgba(brand.secondaryColor, 0.18)}`,
+  `--color-accent-glow:${hexToRgba(brand.accentColor, 0.12)}`,
   `--font-heading:'${brand.fontHeading}',system-ui,sans-serif`,
   `--font-body:'${brand.fontBody}',system-ui,sans-serif`,
 ].join(';')
 
-// Load only the unique fonts the brand uses.
 const fonts = [...new Set([brand.fontHeading, brand.fontBody].filter(Boolean))]
 const googleFontsUrl = `https://fonts.googleapis.com/css2?${fonts.map(f => `family=${f.replace(/ /g,'+' )}:wght@400;500;600;700;800`).join('&')}&display=swap`
 ---
