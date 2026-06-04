@@ -1,13 +1,13 @@
 {
   "siteName": "Dink Daily",
-  "tagline": "Your Daily Pickleball Fix",
-  "description": "The latest news, tips, and gear for pickleball players of all levels.",
-  "primaryColor": "#16A34A",
-  "secondaryColor": "#15803D",
-  "accentColor": "#FCD34D",
-  "backgroundColor": "#0F172A",
+  "tagline": "Your daily source for pickleball news, tips, and gear",
+  "description": "Dink Daily covers everything pickleball — from beginner tips to pro gear reviews.",
+  "primaryColor": "#00cc3d",
+  "secondaryColor": "#00206b",
+  "accentColor": "#d4ff00",
+  "backgroundColor": "#0F1117",
   "surfaceColor": "#1E293B",
-  "textColor": "#E2E8F0",
+  "textColor": "#E6EDF3",
   "mutedColor": "#94A3B8",
   "fontHeading": "Inter",
   "fontBody": "Inter",
@@ -16,9 +16,21 @@
   "instagramUrl": "",
   "youtubeUrl": "",
   "navLinks": [
-    {"label": "Home", "href": "/"},
-    {"label": "Blog", "href": "/blog"},
-    {"label": "About", "href": "/about"},
-    {"label": "Subscribe", "href": "/subscribe"}
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "Blog",
+      "href": "/blog"
+    },
+    {
+      "label": "About",
+      "href": "/about"
+    },
+    {
+      "label": "Subscribe",
+      "href": "/subscribe"
+    }
   ]
 }
