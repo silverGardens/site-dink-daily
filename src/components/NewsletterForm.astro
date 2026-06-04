@@ -1,11 +1,13 @@
 ---
+import brand from '../brand.config.json'
 interface Props {
   variant: 'hero' | 'inline' | 'standalone'
 }
 const { variant } = Astro.props
 const formId = `newsletter-form-${Math.random().toString(36).slice(2,7)}`
 const webhookUrl = import.meta.env.PUBLIC_NEWSLETTER_WEBHOOK ?? ''
-const siteSlug = import.meta.env.PUBLIC_SITE_SLUG ?? ''
+const siteSlug = import.meta.env.PUBLIC_SITE_SLUG ?? brand.slug ?? ''
+const siteName = brand.siteName
 ---
 
 {variant === 'standalone' && (
@@ -24,7 +26,7 @@ const siteSlug = import.meta.env.PUBLIC_SITE_SLUG ?? ''
       <button type="submit" class="nl-btn nl-btn--full">Subscribe — It's Free</button>
     </form>
     <div class="nl-success" data-success style="display:none">
-      <p>🎉 You're in! Welcome to AI Tools Daily. Check your inbox for a confirmation.</p>
+      <p>🎉 You're in! Welcome to {siteName}. Check your inbox for a confirmation.</p>
     </div>
     <div class="nl-error" data-error style="display:none">
       <p>Something went wrong. Please try again.</p>

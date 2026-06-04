@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro'
 import NewsletterForm from '../components/NewsletterForm.astro'
+import brand from '../brand.config.json'
 
 interface Props {
   frontmatter: {
@@ -60,8 +61,8 @@ const readTime = Math.max(1, Math.ceil(wordCount / 200))
       </div>
 
       <div class="post-newsletter">
-        <h3>Enjoyed this? Get more pickleball content.</h3>
-        <p>Subscribe to Dink Daily for tips, gear reviews, and tournament news delivered to your inbox.</p>
+        <h3>Enjoyed this? Get more from {brand.siteName}.</h3>
+        <p>{brand.tagline} — subscribe for free.</p>
         <NewsletterForm variant="inline" />
       </div>
 

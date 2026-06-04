@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
+import brand from '../brand.config.json'
 ---
 
-<BaseLayout title="Contact" description="Get in touch with the Dink Daily team.">
+<BaseLayout title="Contact" description={`Get in touch with the ${brand.siteName} team.`}>
   <section class="contact-page">
     <div class="contact-inner">
       <h1 class="contact-title">Get in Touch</h1>
@@ -12,7 +13,9 @@ import BaseLayout from '../layouts/BaseLayout.astro'
       <p class="contact-body">
         The best way to reach us is email. We typically respond within a few business days.
       </p>
-      <a href="mailto:hello@dinkdaily.com" class="contact-email">hello@dinkdaily.com</a>
+      {brand.contactEmail && (
+        <a href={`mailto:${brand.contactEmail}`} class="contact-email">{brand.contactEmail}</a>
+      )}
     </div>
   </section>
 </BaseLayout>

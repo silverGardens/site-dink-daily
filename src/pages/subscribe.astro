@@ -1,15 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import NewsletterForm from '../components/NewsletterForm.astro'
+import brand from '../brand.config.json'
 ---
 
-<BaseLayout title="Subscribe" description="Get the best pickleball content delivered to your inbox — free.">
+<BaseLayout title="Subscribe" description={`${brand.tagline} — ${brand.siteName} newsletter, free.`}>
   <section class="subscribe-page">
     <div class="subscribe-inner">
-      <h1 class="sub-title">Your Daily Pickleball Fix</h1>
-      <p class="sub-lead">
-        Join pickleball players getting tips, gear reviews, and tournament news — delivered to your inbox.
-      </p>
+      <h1 class="sub-title">{brand.tagline}</h1>
+      <p class="sub-lead">{brand.description}</p>
       <ul class="benefits">
         <li><span class="check">✓</span> Skill tips and drills that actually work</li>
         <li><span class="check">✓</span> Honest gear reviews from real players</li>

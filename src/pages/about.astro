@@ -1,12 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import NewsletterForm from '../components/NewsletterForm.astro'
+import brand from '../brand.config.json'
 ---
 
-<BaseLayout title="About" description="About Dink Daily — pickleball tips, gear reviews, and news for players of all levels.">
+<BaseLayout title="About" description={`About ${brand.siteName} — ${brand.description}`}>
   <section class="about-hero">
     <div class="about-hero-inner">
-      <h1 class="about-title">About Dink Daily</h1>
+      <h1 class="about-title">About {brand.siteName}</h1>
       <p class="about-mission">
         We built Dink Daily for the pickleball player who wants to get better, stay informed, and actually enjoy the journey. The sport is growing fast — and with that comes a lot of noise. Generic tips, gear reviews written by people who've never held a paddle, tournament recaps that miss the story.
       </p>
@@ -71,7 +72,7 @@ import NewsletterForm from '../components/NewsletterForm.astro'
   <section class="about-nl">
     <div class="about-nl-inner">
       <h2>Stay in the loop</h2>
-      <p>Get our weekly review or tutorial delivered every Tuesday.</p>
+      <p>{brand.tagline} — delivered free every week.</p>
       <NewsletterForm variant="standalone" />
     </div>
   </section>

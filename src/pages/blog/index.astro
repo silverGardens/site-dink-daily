@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content'
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import BlogCard from '../../components/BlogCard.astro'
 import NewsletterForm from '../../components/NewsletterForm.astro'
+import brand from '../../brand.config.json'
 
 const allPosts = await getCollection('blog')
 const posts = allPosts
@@ -10,11 +11,11 @@ const posts = allPosts
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 ---
 
-<BaseLayout title="Blog" description="Practical guides, honest reviews, and workflow tutorials for AI tools.">
+<BaseLayout title="Blog" description={brand.description}>
   <section class="blog-hero">
     <div class="blog-hero-inner">
       <h1 class="blog-title">The Blog</h1>
-      <p class="blog-subtitle">Practical guides, honest reviews, and workflow tutorials.</p>
+      <p class="blog-subtitle">{brand.description}</p>
     </div>
   </section>
 
@@ -31,7 +32,7 @@ const posts = allPosts
   <section class="blog-newsletter">
     <div class="blog-nl-inner">
       <h2>Get the weekly roundup</h2>
-      <p>New AI tool reviews and tutorials, every Tuesday.</p>
+      <p>{brand.tagline}</p>
       <NewsletterForm variant="inline" />
     </div>
   </section>

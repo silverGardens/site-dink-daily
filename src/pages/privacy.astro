@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
+import brand from '../brand.config.json'
 ---
 
-<BaseLayout title="Privacy Policy" description="Privacy policy for Dink Daily — what we collect and how we use it.">
+<BaseLayout title="Privacy Policy" description={`Privacy policy for ${brand.siteName} — what we collect and how we use it.`}>
   <section class="privacy-page">
     <div class="privacy-inner">
       <h1 class="privacy-title">Privacy Policy</h1>
@@ -15,13 +16,13 @@ import BaseLayout from '../layouts/BaseLayout.astro'
         <p>If you subscribe to our newsletter, we collect your email address and, optionally, your first name. That's it. We don't collect payment information, browsing history, or any demographic data beyond what you choose to provide in the signup form.</p>
 
         <h2>How We Use It</h2>
-        <p>We use your email address to send you the Dink Daily newsletter. We don't sell your email address to anyone. We don't share it with third parties for marketing purposes. We don't use it to target you with ads anywhere else on the internet.</p>
+        <p>We use your email address to send you the {brand.siteName} newsletter. We don't sell your email address to anyone. We don't share it with third parties for marketing purposes. We don't use it to target you with ads anywhere else on the internet.</p>
 
         <h2>Automation Services</h2>
         <p>Newsletter subscriptions are processed through automation software running on private infrastructure. When you submit the signup form, your email and optional name are passed to this system, which stores them and handles sending. The infrastructure is self-hosted and the data is not shared with or sold to any external marketing platforms.</p>
 
         <h2>Your Rights</h2>
-        <p>You can unsubscribe at any time by clicking the unsubscribe link in any email we send you. If you'd like us to delete your information entirely from our records, email us at hello@dinkdaily.com and we'll handle it within a few business days. You're entitled to confirmation that your data has been removed.</p>
+        <p>You can unsubscribe at any time by clicking the unsubscribe link in any email we send you. If you'd like us to delete your information entirely from our records, {brand.contactEmail ? <span>email us at <a href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a></span> : 'reach out via the contact page'} and we'll handle it within a few business days. You're entitled to confirmation that your data has been removed.</p>
 
         <h2>Cookies</h2>
         <p>This site does not use advertising cookies or cross-site tracking cookies. We may use basic analytics provided by our hosting infrastructure (Netlify) to understand general traffic patterns — this data is aggregated and does not identify individual visitors. We don't use Google Analytics or any third-party advertising pixel.</p>
@@ -33,7 +34,7 @@ import BaseLayout from '../layouts/BaseLayout.astro'
         <p>We may update this privacy policy from time to time. When we do, we'll update the "last updated" date at the top. If we make significant changes to how we handle your data, we'll mention it in the newsletter so you're aware. Continued use of the site after an update constitutes acceptance of the revised policy.</p>
 
         <h2>Contact</h2>
-        <p>Questions about this policy? Reach us at <a href="mailto:hello@dinkdaily.com">hello@dinkdaily.com</a>. We're a small team and we respond personally.</p>
+        <p>Questions about this policy? {brand.contactEmail ? <span>Reach us at <a href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a>.</span> : 'Use the contact page to reach us.'} We're a small team and we respond personally.</p>
       </div>
     </div>
   </section>
